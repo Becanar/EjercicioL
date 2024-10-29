@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 
 public class DatosAeropuertoController {
 
+    private Object aeropuerto=null;
     @FXML
     private Button btCancelar;
 
@@ -92,7 +93,10 @@ public class DatosAeropuertoController {
 
     @FXML
     private TextField txtPais;
-
+    public DatosAeropuertoController(Object aeropuerto) {
+        this.aeropuerto = aeropuerto;
+    }
+    public DatosAeropuertoController() {}
     @FXML
     void cancelar(ActionEvent event) {
 

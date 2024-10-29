@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 
-public class AeropuertoPublico {
+public class AeropuertoPublico extends Aeropuerto{
     private Aeropuerto aeropuerto;
     private BigDecimal financiacion;
     private int num_trabajadores;

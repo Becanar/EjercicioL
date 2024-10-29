@@ -2,7 +2,7 @@ package com.example.ejerciciol.model;
 
 import java.util.Objects;
 
-public class AeropuertoPrivado {
+public class AeropuertoPrivado extends Aeropuerto{
     private Aeropuerto aeropuerto;
     private int numero_socios;
 
