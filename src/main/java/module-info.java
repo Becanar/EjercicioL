@@ -5,7 +5,8 @@ module com.example.ejerciciol {
 
 
     opens com.example.ejerciciol to javafx.fxml;
-    exports com.example.ejerciciol;
     exports com.example.ejerciciol.app;
     opens com.example.ejerciciol.app to javafx.fxml;
+    exports com.example.ejerciciol.controladores;
+    opens com.example.ejerciciol.controladores to javafx.fxml;
 }

@@ -1,4 +1,4 @@
-package com.example.ejerciciol;
+package com.example.ejerciciol.controladores;
 
 import com.example.ejerciciol.dao.userDao;
 import com.example.ejerciciol.model.User;
@@ -15,7 +15,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class loginController {
