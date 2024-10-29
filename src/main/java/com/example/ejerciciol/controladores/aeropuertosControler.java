@@ -22,5 +22,6 @@ public class aeropuertosControler {
     }
 
     public void borrarAvion(ActionEvent actionEvent) {
+
     }
 }
