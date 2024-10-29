@@ -30,7 +30,7 @@ public class avionDao {
                 boolean activado = rs.getBoolean("activado");
                 int id_aeropuerto = rs.getInt("id_aeropuerto");
                 Aeropuerto aeropuerto = aeropuertoDao.getAeropuerto(id_aeropuerto);
-                avion = new Avion(id_avion,modelo,numero_asientos,velocidad_maxima,activado,aeropuerto);
+                avion = new Avion(id_avion,modelo,numero_asientos,velocidad_maxima,activado,aeropuerto.getId());
             }
             rs.close();
             connection.closeConexion();
@@ -57,7 +57,7 @@ public class avionDao {
                 boolean activado = rs.getBoolean("activado");
                 int id_aeropuerto = rs.getInt("id_aeropuerto");
                 Aeropuerto aeropuerto_db = aeropuertoDao.getAeropuerto(id_aeropuerto);
-                Avion avion = new Avion(id,modelo,numero_asientos,velocidad_maxima,activado,aeropuerto_db);
+                Avion avion = new Avion(id,modelo,numero_asientos,velocidad_maxima,activado,aeropuerto_db.getId());
                 airplaneList.add(avion);
             }
             rs.close();
@@ -84,7 +84,7 @@ public class avionDao {
                 boolean activado = rs.getBoolean("activado");
                 int id_aeropuerto = rs.getInt("id_aeropuerto");
                 Aeropuerto aeropuerto = aeropuertoDao.getAeropuerto(id_aeropuerto);
-                Avion avion = new Avion(id,modelo,numero_asientos,velocidad_maxima,activado,aeropuerto);
+                Avion avion = new Avion(id,modelo,numero_asientos,velocidad_maxima,activado,aeropuerto.getId());
                 airplaneList.add(avion);
             }
             rs.close();
@@ -102,13 +102,14 @@ public class avionDao {
         PreparedStatement pstmt;
         try {
             connection = new ConectorDB();
+            System.out.println(avionNuevo.getAeropuerto());
             String consulta = "UPDATE aviones SET modelo = ?,numero_asientos = ?,velocidad_maxima = ?,activado = ?,id_aeropuerto = ? WHERE id = ?";
             pstmt = connection.getConnection().prepareStatement(consulta);
             pstmt.setString(1, avionNuevo.getModelo());
             pstmt.setInt(2, avionNuevo.getNumero_asientos());
             pstmt.setInt(3, avionNuevo.getVelocidad_maxima());
             pstmt.setBoolean(4, avionNuevo.isActivado());
-            pstmt.setInt(5, avionNuevo.getAeropuerto().getId());
+            pstmt.setInt(5, avionNuevo.getAeropuerto());
             pstmt.setInt(6, avion.getId());
             int filasAfectadas = pstmt.executeUpdate();
             System.out.println("Actualizada avion");
@@ -135,7 +136,7 @@ public class avionDao {
             pstmt.setInt(2, avion.getNumero_asientos());
             pstmt.setInt(3, avion.getVelocidad_maxima());
             pstmt.setBoolean(4, avion.isActivado());
-            pstmt.setInt(5, avion.getAeropuerto().getId());
+            pstmt.setInt(5, avion.getAeropuerto());
             int filasAfectadas = pstmt.executeUpdate();
             System.out.println("Nueva entrada en avion");
             if (filasAfectadas > 0) {

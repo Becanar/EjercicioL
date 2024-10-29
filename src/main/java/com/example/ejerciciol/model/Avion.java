@@ -8,10 +8,10 @@ public class Avion {
     private int numero_asientos;
     private int velocidad_maxima;
     private boolean activado;
-    private Aeropuerto aeropuerto;
+    private int aeropuerto;
 
 
-    public Avion(int id, String modelo, int numero_asientos, int velocidad_maxima, boolean activado, Aeropuerto aeropuerto) {
+    public Avion(int id, String modelo, int numero_asientos, int velocidad_maxima, boolean activado, int aeropuerto) {
         this.id = id;
         this.modelo = modelo;
         this.numero_asientos = numero_asientos;
@@ -79,11 +79,11 @@ public class Avion {
     }
 
 
-    public Aeropuerto getAeropuerto() {
+    public int getAeropuerto() {
         return aeropuerto;
     }
 
-    public void setAeropuerto(Aeropuerto aeropuerto) {
+    public void setAeropuerto(int aeropuerto) {
         this.aeropuerto = aeropuerto;
     }
 

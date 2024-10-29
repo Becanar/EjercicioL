@@ -125,7 +125,7 @@ public class AniadirAvionController implements Initializable {
             avion.setNumero_asientos(num_asientos);
             avion.setVelocidad_maxima(vel_max);
             avion.setActivado(btActivado.isSelected());
-            avion.setAeropuerto(comboAeropuerto.getSelectionModel().getSelectedItem());
+            avion.setAeropuerto(comboAeropuerto.getSelectionModel().getSelectedItem().getId());
             ObservableList<Avion> aviones = avionDao.cargarListado();
             if (aviones.contains(avion)) {
                 alerta("Este modelo ya existe en el aeropuerto. Elige otro modelo u otro aeropuerto");
