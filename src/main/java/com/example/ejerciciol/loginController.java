@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -43,39 +44,47 @@ public class loginController {
         String usuario = txtUsuario.getText();
         String password = txtPassword.getText();
         if (usuario.equals("")) {
-            lst.add("El campo usuario no puede estar vacío.");
+            lst.add("El usuario no puede estar vacío.");
         }
         if (password.equals("")) {
-            lst.add("El campo password no puede estar vacío");
+            lst.add("La contraseña no puede estar vacía.");
         }
         if (!lst.isEmpty()) {
             error(lst);
         } else {
             User user = userDao.getUsuario(usuario);
             if (user == null) {
-               lst.add("Usuario no válido");
+               lst.add("Usuario no válido.");
                 txtUsuario.setText("");
                 txtPassword.setText("");
+                error(lst);
             } else {
                 if (password.equals(user.getPassword())) {
-                    System.out.println("Login correcto");
-                   /* try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(loginController.class.getResource("/fxml/Aeropuertos.fxml"));
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(loginController.class.getResource("/fxml/aeropuertos.fxml"));
                         Scene scene = new Scene(fxmlLoader.load());
                         Stage stage = new Stage();
                         stage.setScene(scene);
+                        try {
+                            Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/avion.png").toString());
+                            stage.getIcons().add(img);
+                        } catch (Exception e) {
+                            System.out.println("Error al cargar la imagen: " + e.getMessage());
+                        }
                         stage.setTitle("AVIONES - AEROPUERTOS");
                         stage.show();
-                        Stage actual = (Stage) txtUsuario.getScene().getWindow();
-                        actual.close();
+                        Stage esta = (Stage) txtUsuario.getScene().getWindow();
+                        esta.close();
 
                     } catch (IOException e) {
                         System.err.println(e.getMessage());
-                        error("Error abriendo ventana, por favor inténtelo de nuevo");
-                    }*/
+                        lst.add("No se ha podido abir la ventana.");
+                        error(lst);
+                    }
                 } else {
                     lst.add("Contraseña incorrecta");
                     txtPassword.setText("");
+                    error(lst);
                 }
             }
         }
