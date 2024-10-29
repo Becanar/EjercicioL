@@ -32,8 +32,9 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.fxml.Initializable;
 
-public class aeropuertosControler {
+public class aeropuertosControler implements Initializable{
 
     @FXML
     private MenuItem actDesAvion, aniadirAeropuerto, aniadirAvion, borrarAeropuerto, borrarAvion, editarAeropuerto, infoAeropuerto;
@@ -62,7 +63,7 @@ public class aeropuertosControler {
 
     private ObservableList lstEntera = FXCollections.observableArrayList();
     private ObservableList lstFiltrada = FXCollections.observableArrayList();
-
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         tablaVista.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Object>() {
@@ -91,13 +92,18 @@ public class aeropuertosControler {
     void aniadirAeropuerto(ActionEvent event) {
         try {
             Window ventana = btPrivados.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/DatosAeropuerto.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/ejerciciol/fxml/DatosAeropuerto.fxml"));
             DatosAeropuertoController controlador = new DatosAeropuertoController();
             fxmlLoader.setController(controlador);
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/imagenes/avion.png")));
+            try {
+                Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/avion.png").toString());
+                stage.getIcons().add(img);
+            } catch (Exception e) {
+                System.out.println("Error al cargar la imagen: " + e.getMessage());
+            }
             stage.setTitle("AVIONES - AÑADIR AEROPUERTO");
             stage.initOwner(ventana);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -113,11 +119,7 @@ public class aeropuertosControler {
         }
     }
 
-    /**
-     * Función que se ejecuta cuando se pulsa el botón "Editar" de aeropuertos. Abre un menú para editar el aeropuerto seleccionado
-     *
-     * @param event
-     */
+
     @FXML
     void editarAeropuerto(ActionEvent event) {
         Object aeropuerto = tablaVista.getSelectionModel().getSelectedItem();
@@ -278,11 +280,16 @@ public class aeropuertosControler {
     void aniadirAvion(ActionEvent event) {
         try {
             Window ventana = btPrivados.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AniadirAvion.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/ejerciciol/fxml/AniadirAvion.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/imagenes/avion.png")));
+            try {
+                Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/avion.png").toString());
+                stage.getIcons().add(img);
+            } catch (Exception e) {
+                System.out.println("Error al cargar la imagen: " + e.getMessage());
+            }
             stage.setTitle("AVIONES - AÑADIR AVIÓN");
             stage.initOwner(ventana);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -297,11 +304,16 @@ public class aeropuertosControler {
     void activarDesactivarAvion(ActionEvent event) {
         try {
             Window ventana = btPrivados.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ActivarDesactivarAvion.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/ejerciciol/fxml/ActivarDesactivarAvion.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/imagenes/avion.png")));
+            try {
+                Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/avion.png").toString());
+                stage.getIcons().add(img);
+            } catch (Exception e) {
+                System.out.println("Error al cargar la imagen: " + e.getMessage());
+            }
             stage.setTitle("AVIONES - ACTIVAR/DESACTIVAR AVIÓN");
             stage.initOwner(ventana);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -316,11 +328,16 @@ public class aeropuertosControler {
     void borrarAvion(ActionEvent event) {
         try {
             Window ventana = btPrivados.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/BorrarAvion.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/ejerciciol/fxml/BorrarAvion.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/imagenes/avion.png")));
+            try {
+                Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/avion.png").toString());
+                stage.getIcons().add(img);
+            } catch (Exception e) {
+                System.out.println("Error al cargar la imagen: " + e.getMessage());
+            }
             stage.setTitle("AVIONES - BORRAR AVIÓN");
             stage.initOwner(ventana);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -331,43 +348,62 @@ public class aeropuertosControler {
         }
     }
 
-    /**
-     * Función que carga los aeropuertos públicos en la lista
-     */
+
     public void cargarPublicos() {
-        tablaVista.getSelectionModel().clearSelection();
-        txtNombre.setText(null);
-        lstEntera.clear();
-        lstFiltrada.clear();
-        tablaVista.getItems().clear();
-        tablaVista.getColumns().clear();
+        try {
+            // Limpiar la tabla y las listas
+            tablaVista.getSelectionModel().clearSelection();
+            txtNombre.setText(null);
+            lstEntera.clear();
+            lstFiltrada.clear();
+            tablaVista.getItems().clear();
+            tablaVista.getColumns().clear();
 
-        TableColumn<AeropuertoPublico, Integer> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getId()));
-        TableColumn<AeropuertoPublico, String> colNombre = new TableColumn<>("Nombre");
-        colNombre.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getNombre()));
-        TableColumn<AeropuertoPublico, String> colPais = new TableColumn<>("País");
-        colPais.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getDireccion().getPais()));
-        TableColumn<AeropuertoPublico, String> colCiudad = new TableColumn<>("Ciudad");
-        colCiudad.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getDireccion().getCiudad()));
-        TableColumn<AeropuertoPublico, String> colCalle = new TableColumn<>("Calle");
-        colCalle.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getDireccion().getCalle()));
-        TableColumn<AeropuertoPublico, Integer> colNumero = new TableColumn<>("Número");
-        colNumero.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getDireccion().getNumero()));
-        TableColumn<AeropuertoPublico, Integer> colAnio = new TableColumn<>("Año");
-        colAnio.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getAnio_inauguracion()));
-        TableColumn<AeropuertoPublico, Integer> colCapacidad = new TableColumn<>("Capacidad");
-        colCapacidad.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getCapacidad()));
-        TableColumn<AeropuertoPublico, BigDecimal> colFinanciacion = new TableColumn<>("Financiación");
-        colFinanciacion.setCellValueFactory(new PropertyValueFactory("financiacion"));
-        TableColumn<AeropuertoPublico, Integer> colTrabajadores = new TableColumn<>("Nº Trabajadores");
-        colTrabajadores.setCellValueFactory(new PropertyValueFactory("num_trabajadores"));
-        tablaVista.getColumns().addAll(colId, colNombre, colPais, colCiudad, colCalle, colNumero, colAnio, colCapacidad, colFinanciacion, colTrabajadores);
+            // Configuración de columnas
+            TableColumn<AeropuertoPublico, Integer> colId = new TableColumn<>("ID");
+            colId.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getId()));
 
-        ObservableList<AeropuertoPublico> aeropuertos = aeropuertoPublicoDao.cargarListado();
-        lstEntera.setAll(aeropuertos);
-        tablaVista.setItems(aeropuertos);
+            TableColumn<AeropuertoPublico, String> colNombre = new TableColumn<>("Nombre");
+            colNombre.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getNombre()));
+
+            TableColumn<AeropuertoPublico, String> colPais = new TableColumn<>("País");
+            colPais.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getDireccion().getPais()));
+
+            TableColumn<AeropuertoPublico, String> colCiudad = new TableColumn<>("Ciudad");
+            colCiudad.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getDireccion().getCiudad()));
+
+            TableColumn<AeropuertoPublico, String> colCalle = new TableColumn<>("Calle");
+            colCalle.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getDireccion().getCalle()));
+
+            TableColumn<AeropuertoPublico, Integer> colNumero = new TableColumn<>("Número");
+            colNumero.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getDireccion().getNumero()));
+
+            TableColumn<AeropuertoPublico, Integer> colAnio = new TableColumn<>("Año");
+            colAnio.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getAnio_inauguracion()));
+
+            TableColumn<AeropuertoPublico, Integer> colCapacidad = new TableColumn<>("Capacidad");
+            colCapacidad.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getCapacidad()));
+
+            TableColumn<AeropuertoPublico, BigDecimal> colFinanciacion = new TableColumn<>("Financiación");
+            colFinanciacion.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getFinanciacion()));
+
+            TableColumn<AeropuertoPublico, Integer> colTrabajadores = new TableColumn<>("Nº Trabajadores");
+            colTrabajadores.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getNum_trabajadores()));
+
+            tablaVista.getColumns().addAll(colId, colNombre, colPais, colCiudad, colCalle, colNumero, colAnio, colCapacidad, colFinanciacion, colTrabajadores);
+            ObservableList<AeropuertoPublico> aeropuertos = aeropuertoPublicoDao.cargarListado();
+
+            if (aeropuertos != null && !aeropuertos.isEmpty()) {
+                lstEntera.setAll(aeropuertos);
+                tablaVista.setItems(aeropuertos);
+            } else {
+                System.out.println("No se encontraron aeropuertos.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Manejo de errores
+        }
     }
+
 
     public void cargarPrivados() {
 
@@ -454,4 +490,6 @@ public class aeropuertosControler {
         alerta.setContentText(texto);
         alerta.showAndWait();
     }
+
+
 }
