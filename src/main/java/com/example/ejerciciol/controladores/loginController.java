@@ -60,7 +60,7 @@ public class loginController {
             } else {
                 if (password.equals(user.getPassword())) {
                     try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(loginController.class.getResource("/fxml/aeropuertos.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(loginController.class.getResource("/com/example/ejerciciol/fxml/aeropuertos.fxml"));
                         Scene scene = new Scene(fxmlLoader.load());
                         Stage stage = new Stage();
                         stage.setScene(scene);

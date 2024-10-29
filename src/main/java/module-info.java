@@ -4,7 +4,6 @@ module com.example.ejerciciol {
     requires java.sql;
 
 
-    opens com.example.ejerciciol to javafx.fxml;
     exports com.example.ejerciciol.app;
     opens com.example.ejerciciol.app to javafx.fxml;
     exports com.example.ejerciciol.controladores;
