@@ -90,12 +90,10 @@ public class aeropuertoPublicoDao {
             pstmt.setInt(2, aeropuertoNuevo.getNum_trabajadores());
             pstmt.setInt(3, aeropuerto.getAeropuerto().getId());
             int filasAfectadas = pstmt.executeUpdate();
-            System.out.println("Actualizada aeropuerto");
             pstmt.close();
             connection.closeConexion();
             return filasAfectadas > 0;
         } catch (SQLException e) {
-            System.out.println("hello");
             System.err.println(e.getMessage());
             return false;
         } catch (FileNotFoundException e) {
@@ -119,7 +117,6 @@ public class aeropuertoPublicoDao {
             pstmt.setInt(3, aeropuerto.getNum_trabajadores());
 
             int filasAfectadas = pstmt.executeUpdate();
-            System.out.println("Nueva entrada en aeropuertos_publicos");
             pstmt.close();
             connection.closeConexion();
             return (filasAfectadas > 0);
@@ -143,7 +140,6 @@ public class aeropuertoPublicoDao {
             int filasAfectadas = pstmt.executeUpdate();
             pstmt.close();
             connection.closeConexion();
-            System.out.println("Eliminado con éxito");
             return filasAfectadas > 0;
 
         } catch (SQLException e) {

@@ -90,7 +90,6 @@ public class aeropuertoPrivadoDao {
 
             int filasAfectadas = pstmt.executeUpdate();
 
-            System.out.println("Actualizado aeropuerto");
             pstmt.close();
             connection.closeConexion();
             return filasAfectadas > 0;
@@ -117,7 +116,6 @@ public class aeropuertoPrivadoDao {
 
             int filasAfectadas = pstmt.executeUpdate();
 
-            System.out.println("Nueva entrada en aeropuertos_privados");
             pstmt.close();
             connection.closeConexion();
             return (filasAfectadas > 0);
@@ -141,7 +139,6 @@ public class aeropuertoPrivadoDao {
             int filasAfectadas = pstmt.executeUpdate();
             pstmt.close();
             connection.closeConexion();
-            System.out.println("Eliminado con éxito");
             return filasAfectadas > 0;
 
         } catch (SQLException e) {

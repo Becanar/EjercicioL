@@ -19,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class BorrarAvionController implements Initializable {
@@ -52,7 +53,6 @@ public class BorrarAvionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Aeropuertos
         ObservableList<Aeropuerto> aeropuertos = aeropuertoDao.cargarListado();
         comboAeropuerto.setItems(aeropuertos);
         comboAeropuerto.getSelectionModel().select(0);
@@ -84,27 +84,33 @@ public class BorrarAvionController implements Initializable {
         Avion avion = comboAvion.getSelectionModel().getSelectedItem();
         boolean resultado = avionDao.eliminar(avion);
         if (resultado) {
-            confirmacion("Avión eliminado correctamente");
+            ArrayList<String> lst=new ArrayList<>();
+            lst.add("Avion eliminado correctamente");
+            confirmacion(lst);
             Stage stage = (Stage)comboAeropuerto.getScene().getWindow();
             stage.close();
         } else {
-            alerta("Ha habido un error eliminado el avión. Por favor inténtelo de nuevo");
+            ArrayList<String> lst=new ArrayList<>();
+            lst.add("No se ha podido eliminar el avión.");
+            alerta(lst);
         }
     }
 
-    public void alerta(String texto) {
+    public void alerta(ArrayList<String> textos) {
+        String contenido = String.join("\n", textos);
         Alert alerta = new Alert(Alert.AlertType.ERROR);
         alerta.setHeaderText(null);
         alerta.setTitle("ERROR");
-        alerta.setContentText(texto);
+        alerta.setContentText(contenido);
         alerta.showAndWait();
     }
 
-    public void confirmacion(String texto) {
+    public void confirmacion(ArrayList<String> textos) {
+        String contenido = String.join("\n", textos);
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setHeaderText(null);
         alerta.setTitle("Info");
-        alerta.setContentText(texto);
+        alerta.setContentText(contenido);
         alerta.showAndWait();
     }
 

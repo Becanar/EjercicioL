@@ -22,7 +22,7 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setResizable(false);
         try {
-            Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/avion.png").toString());
+            Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/plane.png").toString());
             stage.getIcons().add(img);
         } catch (Exception e) {
             System.out.println("Error al cargar la imagen: " + e.getMessage());

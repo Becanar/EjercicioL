@@ -30,7 +30,7 @@ public class avionDao {
                 boolean activado = rs.getBoolean("activado");
                 int id_aeropuerto = rs.getInt("id_aeropuerto");
                 Aeropuerto aeropuerto = aeropuertoDao.getAeropuerto(id_aeropuerto);
-                avion = new Avion(id_avion,modelo,numero_asientos,velocidad_maxima,activado,aeropuerto.getId());
+                avion = new Avion(id_avion,modelo,numero_asientos,velocidad_maxima,activado,aeropuerto);
             }
             rs.close();
             connection.closeConexion();
@@ -57,7 +57,7 @@ public class avionDao {
                 boolean activado = rs.getBoolean("activado");
                 int id_aeropuerto = rs.getInt("id_aeropuerto");
                 Aeropuerto aeropuerto_db = aeropuertoDao.getAeropuerto(id_aeropuerto);
-                Avion avion = new Avion(id,modelo,numero_asientos,velocidad_maxima,activado,aeropuerto_db.getId());
+                Avion avion = new Avion(id,modelo,numero_asientos,velocidad_maxima,activado,aeropuerto_db);
                 airplaneList.add(avion);
             }
             rs.close();
@@ -84,7 +84,7 @@ public class avionDao {
                 boolean activado = rs.getBoolean("activado");
                 int id_aeropuerto = rs.getInt("id_aeropuerto");
                 Aeropuerto aeropuerto = aeropuertoDao.getAeropuerto(id_aeropuerto);
-                Avion avion = new Avion(id,modelo,numero_asientos,velocidad_maxima,activado,aeropuerto.getId());
+                Avion avion = new Avion(id,modelo,numero_asientos,velocidad_maxima,activado,aeropuerto);
                 airplaneList.add(avion);
             }
             rs.close();
@@ -102,17 +102,15 @@ public class avionDao {
         PreparedStatement pstmt;
         try {
             connection = new ConectorDB();
-            System.out.println(avionNuevo.getAeropuerto());
             String consulta = "UPDATE aviones SET modelo = ?,numero_asientos = ?,velocidad_maxima = ?,activado = ?,id_aeropuerto = ? WHERE id = ?";
             pstmt = connection.getConnection().prepareStatement(consulta);
             pstmt.setString(1, avionNuevo.getModelo());
             pstmt.setInt(2, avionNuevo.getNumero_asientos());
             pstmt.setInt(3, avionNuevo.getVelocidad_maxima());
             pstmt.setBoolean(4, avionNuevo.isActivado());
-            pstmt.setInt(5, avionNuevo.getAeropuerto());
+            pstmt.setInt(5, avionNuevo.getAeropuerto().getId());
             pstmt.setInt(6, avion.getId());
             int filasAfectadas = pstmt.executeUpdate();
-            System.out.println("Actualizada avion");
             pstmt.close();
             connection.closeConexion();
             return filasAfectadas > 0;
@@ -129,16 +127,14 @@ public class avionDao {
         PreparedStatement pstmt;
         try {
             connection = new ConectorDB();
-            // INSERT INTO `DNI`.`dni` (`dni`) VALUES ('el nuevo');
             String consulta = "INSERT INTO aviones (modelo,numero_asientos,velocidad_maxima,activado,id_aeropuerto) VALUES (?,?,?,?,?) ";
             pstmt = connection.getConnection().prepareStatement(consulta, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, avion.getModelo());
             pstmt.setInt(2, avion.getNumero_asientos());
             pstmt.setInt(3, avion.getVelocidad_maxima());
             pstmt.setBoolean(4, avion.isActivado());
-            pstmt.setInt(5, avion.getAeropuerto());
+            pstmt.setInt(5, avion.getAeropuerto().getId());
             int filasAfectadas = pstmt.executeUpdate();
-            System.out.println("Nueva entrada en avion");
             if (filasAfectadas > 0) {
                 ResultSet rs = pstmt.getGeneratedKeys();
                 if (rs.next()) {
@@ -170,7 +166,6 @@ public class avionDao {
             int filasAfectadas = pstmt.executeUpdate();
             pstmt.close();
             connection.closeConexion();
-            System.out.println("Eliminado con éxito");
             return filasAfectadas > 0;
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -191,7 +186,6 @@ public class avionDao {
             int filasAfectadas = pstmt.executeUpdate();
             pstmt.close();
             connection.closeConexion();
-            System.out.println("Eliminado con éxito");
             return filasAfectadas > 0;
         } catch (SQLException e) {
             System.err.println(e.getMessage());

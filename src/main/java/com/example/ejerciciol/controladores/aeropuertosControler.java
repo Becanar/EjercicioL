@@ -30,6 +30,7 @@ import javafx.stage.Window;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -97,10 +98,12 @@ public class aeropuertosControler implements Initializable{
             Stage stage = new Stage();
             stage.setScene(scene);
             try {
-                Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/avion.png").toString());
+                Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/plane.png").toString());
                 stage.getIcons().add(img);
             } catch (Exception e) {
-                System.out.println("Error al cargar la imagen: " + e.getMessage());
+                ArrayList<String> lst=new ArrayList<>();
+                lst.add("No se ha podido cargar la imagen.");
+                alerta(lst);
             }
             stage.setTitle("AVIONES - AÑADIR AEROPUERTO");
             stage.initOwner(ventana);
@@ -112,8 +115,9 @@ public class aeropuertosControler implements Initializable{
                 cargarPrivados();
             }
         } catch (IOException e) {
-            System.err.println(e.getMessage());
-            alerta("Error abriendo ventana, por favor inténtelo de nuevo");
+            ArrayList<String> lst=new ArrayList<>();
+            lst.add("No se ha podido abrir la ventana.");
+            alerta(lst);
         }
     }
 
@@ -122,7 +126,9 @@ public class aeropuertosControler implements Initializable{
     void editarAeropuerto(ActionEvent event) {
         Object aeropuerto = tablaVista.getSelectionModel().getSelectedItem();
         if (aeropuerto == null) {
-            alerta("Selecciona un aeropuerto antes de editarlo");
+            ArrayList<String> lst=new ArrayList<>();
+            lst.add("No has seleccionado ningún aeropuerto.");
+            alerta(lst);
         } else {
             try {
                 Window ventana = btPrivados.getScene().getWindow();
@@ -131,10 +137,12 @@ public class aeropuertosControler implements Initializable{
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 try {
-                    Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/avion.png").toString());
+                    Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/plane.png").toString());
                     stage.getIcons().add(img);
                 } catch (Exception e) {
-                    System.out.println("Error al cargar la imagen: " + e.getMessage());
+                    ArrayList<String> lst=new ArrayList<>();
+                    lst.add("No se ha podido cargar la imagen.");
+                    alerta(lst);
                 }
                 stage.setTitle("AVIONES - EDITAR AEROPUERTO");
                 stage.initOwner(ventana);
@@ -146,8 +154,9 @@ public class aeropuertosControler implements Initializable{
                     cargarPrivados();
                 }
             } catch (IOException e) {
-                System.err.println(e.getMessage());
-                alerta("Error abriendo ventana, por favor inténtelo de nuevo");
+                ArrayList<String> lst=new ArrayList<>();
+                lst.add("No se ha podido abrir la ventana.");
+                alerta(lst);
             }
         }
     }
@@ -156,7 +165,9 @@ public class aeropuertosControler implements Initializable{
     void borrarAeropuerto(ActionEvent event) {
         Object aeropuerto = tablaVista.getSelectionModel().getSelectedItem();
         if (aeropuerto == null) {
-            alerta("Selecciona un aeropuerto antes de eliminarlo");
+            ArrayList<String> lst=new ArrayList<>();
+            lst.add("No has seleccionado ningún aeropuerto.");
+            alerta(lst);
         } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.initOwner(tablaVista.getScene().getWindow());
@@ -170,7 +181,9 @@ public class aeropuertosControler implements Initializable{
                     ObservableList<Avion> aviones = avionDao.cargarListado(aeropuertoPublico.getAeropuerto());
                     for (Avion avion : aviones) {
                         if (!avionDao.eliminar(avion)) {
-                            alerta("No se pudo eliminar ese aeropuerto. Inténtelo de nuevo");
+                            ArrayList<String> lst=new ArrayList<>();
+                            lst.add("No se ha podido eliminar el avión.");
+                            alerta(lst);
                             return;
                         }
                     }
@@ -180,17 +193,23 @@ public class aeropuertosControler implements Initializable{
                             cargarPublicos();
                             confirmacion("Aeropuerto eliminado correctamente");
                         } else {
-                            alerta("No se pudo eliminar ese aeropuerto. Inténtelo de nuevo");
+                            ArrayList<String> lst=new ArrayList<>();
+                            lst.add("No se ha podido eliminar el aeropuerto.");
+                            alerta(lst);
                         }
                     } else {
-                        alerta("No se pudo eliminar ese aeropuerto. Inténtelo de nuevo");
+                        ArrayList<String> lst=new ArrayList<>();
+                        lst.add("No se ha podido eliminar el aeropuerto.");
+                        alerta(lst);
                     }
                 } else {
                     AeropuertoPrivado aeropuertoPrivado = (AeropuertoPrivado) aeropuerto;
                     ObservableList<Avion> aviones = avionDao.cargarListado(aeropuertoPrivado.getAeropuerto());
                     for (Avion avion : aviones) {
                         if (!avionDao.eliminar(avion)) {
-                            alerta("No se pudo eliminar ese aeropuerto. Inténtelo de nuevo");
+                            ArrayList<String> lst=new ArrayList<>();
+                            lst.add("No se ha podido eliminar el avion.");
+                            alerta(lst);
                             return;
                         }
                     }
@@ -200,10 +219,14 @@ public class aeropuertosControler implements Initializable{
                             cargarPrivados();
                             confirmacion("Aeropuerto eliminado correctamente");
                         } else {
-                            alerta("No se pudo eliminar ese aeropuerto. Inténtelo de nuevo");
+                            ArrayList<String> lst=new ArrayList<>();
+                            lst.add("No se ha podido eliminar el aeropuerto.");
+                            alerta(lst);
                         }
                     } else {
-                        alerta("No se pudo eliminar ese aeropuerto. Inténtelo de nuevo");
+                        ArrayList<String> lst=new ArrayList<>();
+                        lst.add("No se ha podido eliminar el aeropuerto.");
+                        alerta(lst);
                     }
                 }
             }
@@ -214,60 +237,63 @@ public class aeropuertosControler implements Initializable{
     void infoAeropuerto(ActionEvent event) {
         Object aeropuerto = tablaVista.getSelectionModel().getSelectedItem();
         if (aeropuerto == null) {
-            alerta("Selecciona un aeropuerto antes de ver su información");
+            ArrayList<String> errores = new ArrayList<>();
+            errores.add("Selecciona un aeropuerto antes de ver su información");
+            alerta(errores);
         } else {
-            String info = "";
+            ArrayList<String> info = new ArrayList<>();
             if (aeropuerto instanceof AeropuertoPublico) {
                 AeropuertoPublico aeropuertoPublico = (AeropuertoPublico) aeropuerto;
                 Aeropuerto airport = aeropuertoPublico.getAeropuerto();
-                info = "Nombre: " + airport.getNombre();
-                info += "\nPaís:" + airport.getDireccion().getPais();
-                info += "\nDirección: C\\ " + airport.getDireccion().getCalle() + " " + airport.getDireccion().getNumero() + ", " + airport.getDireccion().getCiudad();
-                info += "\nAño de inauguración: " + airport.getAnio_inauguracion();
-                info += "\nCapacidad: " + airport.getCapacidad();
-                info += "\nAviones:";
+
+                info.add("Nombre: " + airport.getNombre());
+                info.add("País: " + airport.getDireccion().getPais());
+                info.add("Dirección: C\\ " + airport.getDireccion().getCalle() + " " + airport.getDireccion().getNumero() + ", " + airport.getDireccion().getCiudad());
+                info.add("Año de inauguración: " + airport.getAnio_inauguracion());
+                info.add("Capacidad: " + airport.getCapacidad());
+                info.add("Aviones:");
+
                 ObservableList<Avion> aviones = avionDao.cargarListado(airport);
                 for (Avion avion : aviones) {
-                    info += "\n\tModelo: " + avion.getModelo();
-                    info += "\n\tNúmero de asientos: " + avion.getNumero_asientos();
-                    info += "\n\tVelocidad máxima: " + avion.getVelocidad_maxima();
-                    if (avion.isActivado()) {
-                        info += "\n\tActivado";
-                    } else {
-                        info += "\n\tDesactivado";
-                    }
+                    info.add("\tModelo: " + avion.getModelo());
+                    info.add("\tNúmero de asientos: " + avion.getNumero_asientos());
+                    info.add("\tVelocidad máxima: " + avion.getVelocidad_maxima());
+                    info.add("\t" + (avion.isActivado() ? "Activado" : "Desactivado"));
                 }
-                info += "\nPúblico";
-                info += "\nFinanciación: " + aeropuertoPublico.getFinanciacion();
-                info += "\nNúmero de trabajadores: " + aeropuertoPublico.getNum_trabajadores();
-            } else {
-                // Aeropuerto Privado
+
+                info.add("Público");
+                info.add("Financiación: " + aeropuertoPublico.getFinanciacion());
+                info.add("Número de trabajadores: " + aeropuertoPublico.getNum_trabajadores());
+
+            } else if (aeropuerto instanceof AeropuertoPrivado) {
                 AeropuertoPrivado aeropuertoPrivado = (AeropuertoPrivado) aeropuerto;
                 Aeropuerto airport = aeropuertoPrivado.getAeropuerto();
-                info = "Nombre: " + airport.getNombre();
-                info += "\nPaís:" + airport.getDireccion().getPais();
-                info += "\nDirección: C\\ " + airport.getDireccion().getCalle() + " " + airport.getDireccion().getNumero() + ", " + airport.getDireccion().getCiudad();
-                info += "\nAño de inauguración: " + airport.getAnio_inauguracion();
-                info += "\nCapacidad: " + airport.getCapacidad();
-                info += "\nAviones:";
+
+                info.add("Nombre: " + airport.getNombre());
+                info.add("País: " + airport.getDireccion().getPais());
+                info.add("Dirección: C\\ " + airport.getDireccion().getCalle() + " " + airport.getDireccion().getNumero() + ", " + airport.getDireccion().getCiudad());
+                info.add("Año de inauguración: " + airport.getAnio_inauguracion());
+                info.add("Capacidad: " + airport.getCapacidad());
+                info.add("Aviones:");
+
                 ObservableList<Avion> aviones = avionDao.cargarListado(airport);
                 for (Avion avion : aviones) {
-                    info += "\n\tModelo: " + avion.getModelo();
-                    info += "\n\tNúmero de asientos: " + avion.getNumero_asientos();
-                    info += "\n\tVelocidad máxima: " + avion.getVelocidad_maxima();
-                    if (avion.isActivado()) {
-                        info += "\n\tActivado";
-                    } else {
-                        info += "\n\tDesactivado";
-                    }
+                    info.add("\tModelo: " + avion.getModelo());
+                    info.add("\tNúmero de asientos: " + avion.getNumero_asientos());
+                    info.add("\tVelocidad máxima: " + avion.getVelocidad_maxima());
+                    info.add("\t" + (avion.isActivado() ? "Activado" : "Desactivado"));
                 }
-                info += "\nPrivado";
-                info += "\nNúmero de socios: " + aeropuertoPrivado.getNumero_socios();
+
+                info.add("Privado");
+                info.add("Número de socios: " + aeropuertoPrivado.getNumero_socios());
             }
+
+            // Convertimos el ArrayList a un solo String, con saltos de línea
+            String contenido = String.join("\n", info);
             Alert alerta = new Alert(Alert.AlertType.INFORMATION);
             alerta.setHeaderText(null);
             alerta.setTitle("Información");
-            alerta.setContentText(info);
+            alerta.setContentText(contenido);
             alerta.showAndWait();
         }
     }
@@ -281,18 +307,21 @@ public class aeropuertosControler implements Initializable{
             Stage stage = new Stage();
             stage.setScene(scene);
             try {
-                Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/avion.png").toString());
+                Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/plane.png").toString());
                 stage.getIcons().add(img);
             } catch (Exception e) {
-                System.out.println("Error al cargar la imagen: " + e.getMessage());
+                ArrayList<String> lst=new ArrayList<>();
+                lst.add("No se ha podido cargar la imagen.");
+                alerta(lst);
             }
             stage.setTitle("AVIONES - AÑADIR AVIÓN");
             stage.initOwner(ventana);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
         } catch (IOException e) {
-            System.err.println(e.getMessage());
-            alerta("Error abriendo ventana, por favor inténtelo de nuevo");
+            ArrayList<String> lst=new ArrayList<>();
+            lst.add("No se ha podido abrir la ventana.");
+            alerta(lst);
         }
     }
 
@@ -305,18 +334,21 @@ public class aeropuertosControler implements Initializable{
             Stage stage = new Stage();
             stage.setScene(scene);
             try {
-                Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/avion.png").toString());
+                Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/plane.png").toString());
                 stage.getIcons().add(img);
             } catch (Exception e) {
-                System.out.println("Error al cargar la imagen: " + e.getMessage());
+                ArrayList<String> lst=new ArrayList<>();
+                lst.add("No se ha podido cargar la imagen.");
+                alerta(lst);
             }
             stage.setTitle("AVIONES - ACTIVAR/DESACTIVAR AVIÓN");
             stage.initOwner(ventana);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
         } catch (IOException e) {
-            System.err.println(e.getMessage());
-            alerta("Error abriendo ventana, por favor inténtelo de nuevo");
+            ArrayList<String> lst=new ArrayList<>();
+            lst.add("No se ha podido abrir la ventana.");
+            alerta(lst);
         }
     }
 
@@ -329,25 +361,27 @@ public class aeropuertosControler implements Initializable{
             Stage stage = new Stage();
             stage.setScene(scene);
             try {
-                Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/avion.png").toString());
+                Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/plane.png").toString());
                 stage.getIcons().add(img);
             } catch (Exception e) {
-                System.out.println("Error al cargar la imagen: " + e.getMessage());
+                ArrayList<String> lst=new ArrayList<>();
+                lst.add("No se ha podido cargar la imagen.");
+                alerta(lst);
             }
             stage.setTitle("AVIONES - BORRAR AVIÓN");
             stage.initOwner(ventana);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
         } catch (IOException e) {
-            System.err.println(e.getMessage());
-            alerta("Error abriendo ventana, por favor inténtelo de nuevo");
+            ArrayList<String> lst=new ArrayList<>();
+            lst.add("No se ha podido abrir la ventana.");
+            alerta(lst);
         }
     }
 
 
     public void cargarPublicos() {
         try {
-            // Limpiar la tabla y las listas
             tablaVista.getSelectionModel().clearSelection();
             txtNombre.setText(null);
             lstEntera.clear();
@@ -355,7 +389,6 @@ public class aeropuertosControler implements Initializable{
             tablaVista.getItems().clear();
             tablaVista.getColumns().clear();
 
-            // Configuración de columnas
             TableColumn<AeropuertoPublico, Integer> colId = new TableColumn<>("ID");
             colId.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getAeropuerto().getId()));
 
@@ -393,7 +426,9 @@ public class aeropuertosControler implements Initializable{
                 lstEntera.setAll(aeropuertos);
                 tablaVista.setItems(aeropuertos);
             } else {
-                System.out.println("No se encontraron aeropuertos.");
+                ArrayList<String> lst=new ArrayList<>();
+                lst.add("No se encontraron Aeropuertos.");
+                alerta(lst);
             }
         } catch (Exception e) {
             e.printStackTrace(); // Manejo de errores
@@ -470,11 +505,12 @@ public class aeropuertosControler implements Initializable{
         }
     }
 
-    public void alerta(String texto) {
+    public void alerta(ArrayList<String> textos) {
+        String contenido = String.join("\n", textos);
         Alert alerta = new Alert(Alert.AlertType.ERROR);
         alerta.setHeaderText(null);
         alerta.setTitle("ERROR");
-        alerta.setContentText(texto);
+        alerta.setContentText(contenido);
         alerta.showAndWait();
     }
 

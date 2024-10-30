@@ -65,10 +65,11 @@ public class loginController {
                         Stage stage = new Stage();
                         stage.setScene(scene);
                         try {
-                            Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/avion.png").toString());
+                            Image img = new Image(getClass().getResource("/com/example/ejerciciol/images/plane.png").toString());
                             stage.getIcons().add(img);
                         } catch (Exception e) {
-                            System.out.println("Error al cargar la imagen: " + e.getMessage());
+                            lst.add("Error al cargar la imagen.");
+                            error(lst);
                         }
                         stage.setTitle("AVIONES - AEROPUERTOS");
                         stage.show();

@@ -28,7 +28,7 @@ public class aeropuertoDao {
                 String nombre = rs.getString("nombre");
                 int anio_inauguracion = rs.getInt("anio_inauguracion");
                 int capacidad = rs.getInt("capacidad");
-                int id_direccion = rs.getInt("id_direction");
+                int id_direccion = rs.getInt("id_direccion");
                 Direccion direccion = direccionDao.getDireccion(id_direccion);
                 Blob imagen = rs.getBlob("imagen");
                 aeropuerto = new Aeropuerto(id_aeropuerto,nombre,anio_inauguracion,capacidad,direccion,imagen);
@@ -86,7 +86,6 @@ public class aeropuertoDao {
             pstmt.setBlob(5, aeropuertoNuevo.getImagen());
             pstmt.setInt(6, aeropuerto.getId());
             int filasAfectadas = pstmt.executeUpdate();
-            System.out.println("Actualizada aeropuerto");
             pstmt.close();
             connection.closeConexion();
             return filasAfectadas > 0;
@@ -111,7 +110,6 @@ public class aeropuertoDao {
             pstmt.setInt(4, aeropuerto.getDireccion().getId());
             pstmt.setBlob(5, aeropuerto.getImagen());
             int filasAfectadas = pstmt.executeUpdate();
-            System.out.println("Nueva entrada en aeropuerto");
             if (filasAfectadas > 0) {
                 ResultSet rs = pstmt.getGeneratedKeys();
                 if (rs.next()) {
@@ -143,7 +141,6 @@ public class aeropuertoDao {
             int filasAfectadas = pstmt.executeUpdate();
             pstmt.close();
             connection.closeConexion();
-            System.out.println("Eliminado con éxito");
             return filasAfectadas > 0;
         } catch (SQLException e) {
             System.err.println(e.getMessage());

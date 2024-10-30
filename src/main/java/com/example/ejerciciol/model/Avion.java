@@ -8,10 +8,10 @@ public class Avion {
     private int numero_asientos;
     private int velocidad_maxima;
     private boolean activado;
-    private int aeropuerto;
+    private Aeropuerto aeropuerto;
 
 
-    public Avion(int id, String modelo, int numero_asientos, int velocidad_maxima, boolean activado, int aeropuerto) {
+    public Avion(int id, String modelo, int numero_asientos, int velocidad_maxima, boolean activado, Aeropuerto aeropuerto) {
         this.id = id;
         this.modelo = modelo;
         this.numero_asientos = numero_asientos;
@@ -23,11 +23,6 @@ public class Avion {
 
     public Avion() {}
 
-
-    @Override
-    public String toString() {
-        return modelo;
-    }
 
     public int getId() {
         return id;
@@ -79,12 +74,23 @@ public class Avion {
     }
 
 
-    public int getAeropuerto() {
+    public Aeropuerto getAeropuerto() {
         return aeropuerto;
     }
 
-    public void setAeropuerto(int aeropuerto) {
+    public void setAeropuerto(Aeropuerto aeropuerto) {
         this.aeropuerto = aeropuerto;
+    }
+
+    @Override
+    public String toString() {
+        return "Avion{" +
+                "modelo='" + modelo + '\'' +
+                ", numero_asientos=" + numero_asientos +
+                ", velocidad_maxima=" + velocidad_maxima +
+                ", activado=" + activado +
+                ", aeropuerto=" + aeropuerto +
+                '}';
     }
 
     @Override

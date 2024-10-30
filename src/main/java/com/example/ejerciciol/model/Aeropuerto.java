@@ -73,14 +73,10 @@ public class Aeropuerto {
 
     @Override
     public String toString() {
-        return "Aeropuerto{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", anio_inauguracion=" + anio_inauguracion +
-                ", capacidad=" + capacidad +
-                ", direccion=" + direccion +
-                ", imagen=" + imagen +
-                '}';
+        return nombre +
+                ", " + anio_inauguracion +
+                ", Capacidad de: " + capacidad +
+                ", " + direccion;
     }
 
     @Override

@@ -69,6 +69,14 @@ public class Direccion {
     }
 
     @Override
+    public String toString() {
+        return pais +
+                "," + ciudad +
+                ", "+ calle +
+                ", " + numero ;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

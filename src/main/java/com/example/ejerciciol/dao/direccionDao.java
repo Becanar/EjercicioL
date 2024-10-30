@@ -46,7 +46,6 @@ public class direccionDao {
             pstmt.setInt(4, direccionNueva.getNumero());
             pstmt.setInt(5, direccion.getId());
             int filasAfectadas = pstmt.executeUpdate();
-            System.out.println("Actualizada dirección");
             pstmt.close();
             connection.closeConexion();
             return filasAfectadas > 0;
@@ -70,7 +69,6 @@ public class direccionDao {
             pstmt.setString(3, direccion.getCalle());
             pstmt.setInt(4, direccion.getNumero());
             int filasAfectadas = pstmt.executeUpdate();
-            System.out.println("Nueva entrada en dirección");
             if (filasAfectadas > 0) {
                 ResultSet rs = pstmt.getGeneratedKeys();
                 if (rs.next()) {
@@ -102,7 +100,6 @@ public class direccionDao {
             int filasAfectadas = pstmt.executeUpdate();
             pstmt.close();
             connection.closeConexion();
-            System.out.println("Eliminado con éxito");
             return filasAfectadas > 0;
         } catch (SQLException e) {
             System.err.println(e.getMessage());

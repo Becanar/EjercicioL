@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class DatosAeropuertoController implements Initializable {
@@ -122,8 +123,6 @@ public class DatosAeropuertoController implements Initializable {
 
             System.out.println("Null");
         } else {
-
-            System.out.println("Not Null");
             Aeropuerto airport;
             if (aeropuerto instanceof AeropuertoPublico) {
 
@@ -226,7 +225,6 @@ public class DatosAeropuertoController implements Initializable {
             }
         }
         if (btPublico.isSelected()) {
-            // Aeropuerto Público
             if (txtFInanciacion.getText().isEmpty()) {
                 if (!error.isEmpty()) {
                     error += "\n";
@@ -257,7 +255,7 @@ public class DatosAeropuertoController implements Initializable {
                 }
             }
         } else {
-            // Aeropuerto Privado
+
             if (txtFInanciacion.getText().isEmpty()) {
                 if (!error.isEmpty()) {
                     error += "\n";
@@ -275,11 +273,11 @@ public class DatosAeropuertoController implements Initializable {
                 }
             }
         }
-        // Fin verificación de datos
         if (!error.isEmpty()) {
-            alerta(error);
+            ArrayList<String> lst=new ArrayList<>();
+            lst.add(error);
+            alerta(lst);
         } else {
-            // Correcto
             boolean resultado;
             if (this.aeropuerto == null) {
                 resultado = crearAeropuerto();
@@ -302,7 +300,9 @@ public class DatosAeropuertoController implements Initializable {
         direccion.setNumero(Integer.parseInt(txtNumero.getText()));
         int id_direccion = direccionDao.insertar(direccion);
         if (id_direccion == -1) {
-            alerta("Ha habido un error almacenando los datos. Por favor vuelva a intentarlo");
+            ArrayList<String> lst=new ArrayList<>();
+            lst.add("No se han podido cargar los datos.");
+            alerta(lst);
             return false;
         } else {
             direccion.setId(id_direccion);
@@ -314,26 +314,34 @@ public class DatosAeropuertoController implements Initializable {
             airport.setImagen(null);
             int id_aeropuerto = aeropuertoDao.insertar(airport);
             if (id_aeropuerto == -1) {
-                alerta("Ha habido un error almacenando los datos. Por favor vuelva a intentarlo");
+                ArrayList<String> lst=new ArrayList<>();
+                lst.add("No se han podido cargar los datos.");
+                alerta(lst);
                 return false;
             } else {
                 airport.setId(id_aeropuerto);
                 if (btPublico.isSelected()) {
-                    // Aeropuerto Público
+
                     AeropuertoPublico aeropuertoPublico = new AeropuertoPublico(airport, new BigDecimal(txtFInanciacion.getText()),Integer.parseInt(txtNumTrab.getText()));
                     if (!aeropuertoPublicoDao.insertar(aeropuertoPublico)) {
-                        alerta("Ha habido un error almacenando los datos. Por favor vuelva a intentarlo");
+                        ArrayList<String> lst=new ArrayList<>();
+                        lst.add("No se han podido cargar los datos.");
+                        alerta(lst);
                         return false;
                     }
                 } else {
-                    // Aeropuerto Privado
+
                     AeropuertoPrivado aeropuertoPrivado = new AeropuertoPrivado(airport,Integer.parseInt(txtFInanciacion.getText()));
                     if (!aeropuertoPrivadoDao.insertar(aeropuertoPrivado)) {
-                        alerta("Ha habido un error almacenando los datos. Por favor vuelva a intentarlo");
+                        ArrayList<String> lst=new ArrayList<>();
+                        lst.add("No se han podido cargar los datos.");
+                        alerta(lst);
                         return false;
                     }
                 }
-                confirmacion("Aeropuerto creado correctamente");
+                ArrayList<String> lst=new ArrayList<>();
+                lst.add("Aeropuerto creado correctamente");
+                confirmacion(lst);
                 return true;
             }
         }
@@ -348,7 +356,9 @@ public class DatosAeropuertoController implements Initializable {
         direccion.setCalle(txtCalle.getText());
         direccion.setNumero(Integer.parseInt(txtNumero.getText()));
         if (!direccionDao.modificar(this.ap.getDireccion(),direccion)) {
-            alerta("Ha habido un error almacenando los datos. Por favor vuelva a intentarlo");
+            ArrayList<String> lst=new ArrayList<>();
+            lst.add("No se han podido cargar los datos.");
+            alerta(lst);
             return false;
         } else {
             airport.setDireccion(direccion);
@@ -357,25 +367,33 @@ public class DatosAeropuertoController implements Initializable {
             airport.setCapacidad(Integer.parseInt(txtCapacidad.getText()));
             airport.setImagen(null);
             if (!aeropuertoDao.modificar(ap,airport)) {
-                alerta("Ha habido un error almacenando los datos. Por favor vuelva a intentarlo");
+                ArrayList<String> lst=new ArrayList<>();
+                lst.add("No se han podido cargar los datos.");
+                alerta(lst);
                 return false;
             } else {
                 if (this.aeropuerto instanceof AeropuertoPublico) {
                     AeropuertoPublico aeropuertoPublico = (AeropuertoPublico) this.aeropuerto;
                     AeropuertoPublico newAirport = new AeropuertoPublico(airport,new BigDecimal(txtFInanciacion.getText()),Integer.parseInt(txtNumTrab.getText()));
                     if (!aeropuertoPublicoDao.modificar(aeropuertoPublico,newAirport)) {
-                        alerta("Ha habido un error almacenando los datos. Por favor vuelva a intentarlo");
+                        ArrayList<String> lst=new ArrayList<>();
+                        lst.add("No se han podido cargar los datos.");
+                        alerta(lst);
                         return false;
                     }
                 } else {
                     AeropuertoPrivado aeropuertoPrivado = (AeropuertoPrivado) this.aeropuerto;
                     AeropuertoPrivado newAirport = new AeropuertoPrivado(airport,Integer.parseInt(txtFInanciacion.getText()));
                     if (!aeropuertoPrivadoDao.modificar(aeropuertoPrivado,newAirport)) {
-                        alerta("Ha habido un error almacenando los datos. Por favor vuelva a intentarlo");
+                        ArrayList<String> lst=new ArrayList<>();
+                        lst.add("No se han podido cargar los datos.");
+                        alerta(lst);
                         return false;
                     }
                 }
-                confirmacion("Aeropuerto actualizado correctamente");
+                ArrayList<String> lst=new ArrayList<>();
+                lst.add("Aeropuerto actualizado correctamente");
+                confirmacion(lst);
                 return true;
             }
         }
@@ -384,12 +402,11 @@ public class DatosAeropuertoController implements Initializable {
 
     public void cambioTipo(ObservableValue<? extends Toggle> observableValue, Toggle oldBtn, Toggle newBtn) {
         if (newBtn.equals(btPublico)) {
-            // Aeropuerto Público
+
             lblFinanciacion.setText("Financiación:");
             lblNumTrab.setText("Número de trabajadores:");
             txtNumTrab.setVisible(true);
         } else {
-            // Aeropuerto Privado
             lblFinanciacion.setText("Número de socios:");
             lblNumTrab.setText(null);
             txtNumTrab.setVisible(false);
@@ -402,19 +419,21 @@ public class DatosAeropuertoController implements Initializable {
         stage.close();
     }
 
-    public void alerta(String texto) {
+    public void alerta(ArrayList<String> textos) {
+        String contenido = String.join("\n", textos);
         Alert alerta = new Alert(Alert.AlertType.ERROR);
         alerta.setHeaderText(null);
         alerta.setTitle("ERROR");
-        alerta.setContentText(texto);
+        alerta.setContentText(contenido);
         alerta.showAndWait();
     }
 
-    public void confirmacion(String texto) {
+    public void confirmacion(ArrayList<String> textos) {
+        String contenido = String.join("\n", textos);
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setHeaderText(null);
         alerta.setTitle("Info");
-        alerta.setContentText(texto);
+        alerta.setContentText(contenido);
         alerta.showAndWait();
     }
 
