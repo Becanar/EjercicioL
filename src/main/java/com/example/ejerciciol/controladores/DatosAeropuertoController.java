@@ -154,127 +154,80 @@ public class DatosAeropuertoController implements Initializable {
 
     @FXML
     void guardar(ActionEvent event) {
+        ArrayList<String> lst=new ArrayList<>();
         String error = "";
         if (txtNombre.getText().isEmpty()) {
-            error = "Campo nombre no puede estar vacío";
+            lst.add("Campo nombre no puede estar vacío");
         }
         if (txtPais.getText().isEmpty()) {
-            if (!error.isEmpty()) {
-                error += "\n";
-            }
-            error += "Campo país no puede estar vacío";
+            lst.add("Campo país no puede estar vacío");
         }
         if (txtCiudad.getText().isEmpty()) {
-            if (!error.isEmpty()) {
-                error += "\n";
-            }
-            error += "Campo ciudad no puede estar vacío";
+            lst.add("Campo ciudad no puede estar vacío");
+
         }
         if (txtCalle.getText().isEmpty()) {
-            if (!error.isEmpty()) {
-                error += "\n";
-            }
-            error += "Campo calle no puede estar vacío";
+            lst.add("Campo calle no puede estar vacío");
         }
         if (txtNumero.getText().isEmpty()) {
-            if (!error.isEmpty()) {
-                error += "\n";
-            }
-            error += "Campo número no puede estar vacío";
+            lst.add("Campo número no puede estar vacío");
         } else {
             try {
                 int numero = Integer.parseInt(txtNumero.getText());
             } catch (NumberFormatException e) {
-                e.printStackTrace();
-                if (!error.isEmpty()) {
-                    error += "\n";
-                }
-                error += "Campo número tiene que ser numérico";
+                lst.add("Campo número tiene que ser numérico");
             }
         }
         if (txtAnio.getText().isEmpty()) {
-            if (!error.isEmpty()) {
-                error += "\n";
-            }
-            error += "Campo año de inauguración no puede estar vacío";
+            lst.add("Campo año de inauguración no puede estar vacío");
         } else {
             try {
                 int anio_inauguracion = Integer.parseInt(txtAnio.getText());
             } catch (NumberFormatException e) {
-                e.printStackTrace();
-                if (!error.isEmpty()) {
-                    error += "\n";
-                }
-                error += "Campo año de inauguración tiene que ser numérico";
+                lst.add("Campo año de inauguración tiene que ser numérico");
             }
         }
         if (txtCapacidad.getText().isEmpty()) {
-            if (!error.isEmpty()) {
-                error += "\n";
-            }
-            error += "Campo capacidad no puede estar vacío";
+            lst.add("Campo capacidad no puede estar vacío");
+
         } else {
             try {
                 int capacidad = Integer.parseInt(txtCapacidad.getText());
             } catch (NumberFormatException e) {
-                e.printStackTrace();
-                if (!error.isEmpty()) {
-                    error += "\n";
-                }
-                error += "Campo capacidad tiene que ser numérico";
+                lst.add("Campo capacidad tiene que ser numérico");
             }
         }
         if (btPublico.isSelected()) {
             if (txtFInanciacion.getText().isEmpty()) {
-                if (!error.isEmpty()) {
-                    error += "\n";
-                }
-                error += "Campo financiación no puede estar vacío";
+                lst.add("Campo financiación no puede estar vacío");
             } else {
                 if (!txtFInanciacion.getText().matches("^-?[0-9]+([\\.,][0-9]+)?$")) {
-                    if (!error.isEmpty()) {
-                        error += "\n";
-                    }
-                    error += "Campo financiación tiene que ser decimal";
+                    lst.add("Campo financiación tiene que ser decimal");
                 }
             }
             if (txtNumTrab.getText().isEmpty()) {
-                if (!error.isEmpty()) {
-                    error += "\n";
-                }
-                error += "Campo número de trabajadores no puede estar vacío";
+                lst.add("Campo número de trabajadores no puede estar vacío");
             } else {
                 try {
                     int capacidad = Integer.parseInt(txtNumTrab.getText());
                 } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    if (!error.isEmpty()) {
-                        error += "\n";
-                    }
-                    error += "Campo número de trabajadores tiene que ser numérico";
+                    lst.add("Campo número de trabajadores tiene que ser numérico");
                 }
             }
         } else {
 
             if (txtFInanciacion.getText().isEmpty()) {
-                if (!error.isEmpty()) {
-                    error += "\n";
-                }
-                error += "Campo número de socios no puede estar vacío";
+                lst.add("Campo número de socios no puede estar vacío");
             } else {
                 try {
                     int capacidad = Integer.parseInt(txtFInanciacion.getText());
                 } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    if (!error.isEmpty()) {
-                        error += "\n";
-                    }
-                    error += "Campo número de socios tiene que ser numérico";
+                    lst.add("Campo número de socios tiene que ser numérico");
                 }
             }
         }
         if (!error.isEmpty()) {
-            ArrayList<String> lst=new ArrayList<>();
+
             lst.add(error);
             alerta(lst);
         } else {

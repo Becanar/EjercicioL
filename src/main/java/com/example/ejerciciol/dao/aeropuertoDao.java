@@ -12,8 +12,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * La clase {@code aeropuertoDao} proporciona métodos para realizar operaciones
+ * de acceso a datos relacionadas con la entidad {@link Aeropuerto}.
+ * Esto incluye la recuperación, modificación, inserción y eliminación
+ * de información sobre aeropuertos en la base de datos.
+ */
 public class aeropuertoDao {
 
+    /**
+     * Obtiene un aeropuerto de la base de datos a partir de su ID.
+     *
+     * @param id el ID del aeropuerto a recuperar
+     * @return un objeto {@link Aeropuerto} que contiene la información del aeropuerto,
+     *         o {@code null} si no se encuentra ningún aeropuerto con el ID proporcionado
+     */
     public static Aeropuerto getAeropuerto(int id) {
         ConectorDB connection;
         Aeropuerto aeropuerto = null;
@@ -43,6 +56,11 @@ public class aeropuertoDao {
         return aeropuerto;
     }
 
+    /**
+     * Carga una lista de todos los aeropuertos en la base de datos.
+     *
+     * @return una lista observable de objetos {@link Aeropuerto}
+     */
     public static ObservableList<Aeropuerto> cargarListado() {
         ConectorDB connection;
         ObservableList<Aeropuerto> airportList = FXCollections.observableArrayList();
@@ -72,6 +90,13 @@ public class aeropuertoDao {
         return airportList;
     }
 
+    /**
+     * Modifica la información de un aeropuerto en la base de datos.
+     *
+     * @param aeropuerto el aeropuerto existente que se desea modificar
+     * @param aeropuertoNuevo el nuevo objeto {@link Aeropuerto} que contiene la información actualizada
+     * @return {@code true} si la modificación fue exitosa; {@code false} en caso contrario
+     */
     public static boolean modificar(Aeropuerto aeropuerto, Aeropuerto aeropuertoNuevo) {
         ConectorDB connection;
         PreparedStatement pstmt;
@@ -97,6 +122,12 @@ public class aeropuertoDao {
         }
     }
 
+    /**
+     * Inserta un nuevo aeropuerto en la base de datos.
+     *
+     * @param aeropuerto el aeropuerto a insertar
+     * @return el ID del nuevo aeropuerto si la inserción fue exitosa; -1 en caso contrario
+     */
     public  static int insertar(Aeropuerto aeropuerto) {
         ConectorDB connection;
         PreparedStatement pstmt;
@@ -130,6 +161,12 @@ public class aeropuertoDao {
         }
     }
 
+    /**
+     * Elimina un aeropuerto de la base de datos.
+     *
+     * @param aeropuerto el aeropuerto que se desea eliminar
+     * @return {@code true} si la eliminación fue exitosa; {@code false} en caso contrario
+     */
     public  static boolean eliminar(Aeropuerto aeropuerto){
         ConectorDB connection;
         PreparedStatement pstmt;

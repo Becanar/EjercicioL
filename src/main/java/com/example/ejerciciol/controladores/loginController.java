@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Clase que se encarga de controlar el login
+ */
 public class loginController {
 
     @FXML
@@ -37,11 +40,18 @@ public class loginController {
     @FXML
     private TextField txtUsuario;
 
+    /**
+     * Maneja el evento de inicio de sesión cuando el usuario presiona el botón de login.
+     * Valida las credenciales del usuario e inicia la ventana de la aplicación si son correctas.
+     *
+     * @param event El evento de acción que se dispara al presionar el botón de login.
+     */
     @FXML
     void login(ActionEvent event) {
-        ArrayList<String> lst=new ArrayList<>();
+        ArrayList<String> lst = new ArrayList<>();
         String usuario = txtUsuario.getText();
         String password = txtPassword.getText();
+
         if (usuario.equals("")) {
             lst.add("El usuario no puede estar vacío.");
         }
@@ -53,7 +63,7 @@ public class loginController {
         } else {
             User user = userDao.getUsuario(usuario);
             if (user == null) {
-               lst.add("Usuario no válido.");
+                lst.add("Usuario no válido.");
                 txtUsuario.setText("");
                 txtPassword.setText("");
                 error(lst);
@@ -78,7 +88,7 @@ public class loginController {
 
                     } catch (IOException e) {
                         System.err.println(e.getMessage());
-                        lst.add("No se ha podido abir la ventana.");
+                        lst.add("No se ha podido abrir la ventana.");
                         error(lst);
                     }
                 } else {
@@ -90,6 +100,11 @@ public class loginController {
         }
     }
 
+    /**
+     * Muestra una alerta con un mensaje de error específico.
+     *
+     * @param lst Lista de mensajes de error a mostrar en la alerta.
+     */
     private void error(ArrayList<String> lst) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.initOwner(btLogin.getScene().getWindow());
@@ -99,5 +114,4 @@ public class loginController {
         alert.setContentText(error);
         alert.showAndWait();
     }
-
 }

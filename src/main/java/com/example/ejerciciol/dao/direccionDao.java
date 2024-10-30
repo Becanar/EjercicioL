@@ -8,7 +8,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * La clase {@code direccionDao} proporciona métodos para realizar operaciones
+ * de acceso a datos relacionadas con la entidad {@link Direccion}.
+ * Estas operaciones incluyen la obtención, modificación, inserción y eliminación
+ * de direcciones en la base de datos.
+ */
 public class direccionDao {
+
+    /**
+     * Obtiene una dirección de la base de datos a partir de su ID.
+     *
+     * @param id el ID de la dirección a obtener
+     * @return la dirección correspondiente al ID, o {@code null} si no se encuentra
+     */
     public static Direccion getDireccion(int id) {
         ConectorDB connection;
         Direccion direccion = null;
@@ -33,15 +46,22 @@ public class direccionDao {
         return direccion;
     }
 
+    /**
+     * Modifica una dirección existente en la base de datos.
+     *
+     * @param direccion      la dirección que se va a modificar
+     * @param direccionNueva la nueva dirección que reemplazará a la existente
+     * @return {@code true} si la modificación fue exitosa; {@code false} en caso contrario
+     */
     public static boolean modificar(Direccion direccion, Direccion direccionNueva) {
         ConectorDB connection;
         PreparedStatement pstmt;
         try {
             connection = new ConectorDB();
-            String consulta = "UPDATE direcciones SET pais = ?,ciudad = ?,calle = ?,numero = ? WHERE id = ?";
+            String consulta = "UPDATE direcciones SET pais = ?, ciudad = ?, calle = ?, numero = ? WHERE id = ?";
             pstmt = connection.getConnection().prepareStatement(consulta);
             pstmt.setString(1, direccionNueva.getPais());
-            pstmt.setString(2, direccionNueva.getCalle());
+            pstmt.setString(2, direccionNueva.getCiudad());
             pstmt.setString(3, direccionNueva.getCalle());
             pstmt.setInt(4, direccionNueva.getNumero());
             pstmt.setInt(5, direccion.getId());
@@ -57,12 +77,18 @@ public class direccionDao {
         }
     }
 
-    public  static int insertar(Direccion direccion) {
+    /**
+     * Inserta una nueva dirección en la base de datos.
+     *
+     * @param direccion la dirección a insertar
+     * @return el ID de la nueva dirección si la inserción fue exitosa; {@code -1} en caso contrario
+     */
+    public static int insertar(Direccion direccion) {
         ConectorDB connection;
         PreparedStatement pstmt;
         try {
             connection = new ConectorDB();
-            String consulta = "INSERT INTO direcciones (pais,ciudad,calle,numero) VALUES (?,?,?,?) ";
+            String consulta = "INSERT INTO direcciones (pais, ciudad, calle, numero) VALUES (?, ?, ?, ?)";
             pstmt = connection.getConnection().prepareStatement(consulta, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, direccion.getPais());
             pstmt.setString(2, direccion.getCiudad());
@@ -89,7 +115,13 @@ public class direccionDao {
         }
     }
 
-    public  static boolean eliminar(Direccion direccion){
+    /**
+     * Elimina una dirección de la base de datos.
+     *
+     * @param direccion la dirección a eliminar
+     * @return {@code true} si la eliminación fue exitosa; {@code false} en caso contrario
+     */
+    public static boolean eliminar(Direccion direccion) {
         ConectorDB connection;
         PreparedStatement pstmt;
         try {

@@ -13,8 +13,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * La clase {@code aeropuertoPrivadoDao} proporciona métodos para realizar operaciones
+ * de acceso a datos relacionadas con la entidad {@link AeropuertoPrivado}.
+ * Esto incluye la recuperación, modificación, inserción y eliminación
+ * de información sobre aeropuertos privados en la base de datos.
+ */
 public class aeropuertoPrivadoDao {
 
+    /**
+     * Obtiene un aeropuerto privado de la base de datos a partir de su ID.
+     *
+     * @param id el ID del aeropuerto a recuperar
+     * @return un objeto {@link AeropuertoPrivado} que contiene la información del aeropuerto,
+     *         o {@code null} si no se encuentra ningún aeropuerto con el ID proporcionado
+     */
     public static AeropuertoPrivado getAeropuerto(int id) {
         ConectorDB connection;
         AeropuertoPrivado aeropuerto = null;
@@ -46,6 +59,11 @@ public class aeropuertoPrivadoDao {
         return aeropuerto;
     }
 
+    /**
+     * Carga una lista de todos los aeropuertos privados en la base de datos.
+     *
+     * @return una lista observable de objetos {@link AeropuertoPrivado}
+     */
     public static ObservableList<AeropuertoPrivado> cargarListado() {
         ConectorDB connection;
         ObservableList<AeropuertoPrivado> airportList = FXCollections.observableArrayList();
@@ -77,6 +95,13 @@ public class aeropuertoPrivadoDao {
         return airportList;
     }
 
+    /**
+     * Modifica la información de un aeropuerto privado en la base de datos.
+     *
+     * @param aeropuerto el aeropuerto privado existente que se desea modificar
+     * @param aeropuertoNuevo el nuevo objeto {@link AeropuertoPrivado} que contiene la información actualizada
+     * @return {@code true} si la modificación fue exitosa; {@code false} en caso contrario
+     */
     public static boolean modificar(AeropuertoPrivado aeropuerto, AeropuertoPrivado aeropuertoNuevo) {
         ConectorDB connection;
         PreparedStatement pstmt;
@@ -101,6 +126,12 @@ public class aeropuertoPrivadoDao {
         }
     }
 
+    /**
+     * Inserta un nuevo aeropuerto privado en la base de datos.
+     *
+     * @param aeropuerto el aeropuerto privado a insertar
+     * @return {@code true} si la inserción fue exitosa; {@code false} en caso contrario
+     */
     public static boolean insertar(AeropuertoPrivado aeropuerto) {
         ConectorDB connection;
         PreparedStatement pstmt;
@@ -127,8 +158,13 @@ public class aeropuertoPrivadoDao {
         }
     }
 
-    public  static boolean eliminar(AeropuertoPrivado aeropuerto){
-
+    /**
+     * Elimina un aeropuerto privado de la base de datos.
+     *
+     * @param aeropuerto el aeropuerto privado que se desea eliminar
+     * @return {@code true} si la eliminación fue exitosa; {@code false} en caso contrario
+     */
+    public static boolean eliminar(AeropuertoPrivado aeropuerto) {
         ConectorDB connection;
         PreparedStatement pstmt;
         try {
@@ -148,5 +184,4 @@ public class aeropuertoPrivadoDao {
             throw new RuntimeException(e);
         }
     }
-
 }
