@@ -1,8 +1,8 @@
 module com.example.ejerciciol {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.base;
     requires java.sql;
+    requires javafx.graphics;
 
 
     exports com.example.ejerciciol.app;
