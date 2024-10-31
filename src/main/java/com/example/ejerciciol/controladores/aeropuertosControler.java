@@ -554,7 +554,7 @@ public class aeropuertosControler implements Initializable{
                     AeropuertoPrivado aeropuertoPrivado = (AeropuertoPrivado) aeropuerto;
                     String nombre = aeropuertoPrivado.getAeropuerto().getNombre();
                     nombre = nombre.toLowerCase();
-                    if (nombre.startsWith(valor)) {
+                    if (nombre.contains(valor)) {
                         lstFiltrada.add(aeropuertoPrivado);
                     }
                 }
