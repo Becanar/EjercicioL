@@ -34,7 +34,11 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
-
+/**
+ * Controlador para la gestión de aeropuertos y aviones en la interfaz de usuario.
+ * Permite la visualización de información, adición y eliminación de aviones, y la carga de listas
+ * de aeropuertos públicos y privados en la tabla.
+ */
 public class aeropuertosControler implements Initializable{
 
     @FXML
@@ -64,6 +68,13 @@ public class aeropuertosControler implements Initializable{
 
     private ObservableList lstEntera = FXCollections.observableArrayList();
     private ObservableList lstFiltrada = FXCollections.observableArrayList();
+
+    /**
+     * Método de inicialización de JavaFX. Configura los listeners para manejar la selección de elementos,
+     * carga de aeropuertos públicos y privados, y la funcionalidad de filtrado.
+     * @param url Ubicación usada para resolver rutas relativas para el objeto raíz, o null si no se proporciona.
+     * @param resourceBundle Recurso local usado para localizar el objeto raíz, o null si no se proporciona.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -88,7 +99,10 @@ public class aeropuertosControler implements Initializable{
         });
         txtNombre.setOnKeyTyped(keyEvent -> filtrar());
     }
-
+    /**
+     * Método para añadir un nuevo aeropuerto mediante una nueva ventana de entrada de datos.
+     * @param event Evento de acción asociado al botón de añadir aeropuerto.
+     */
     @FXML
     void aniadirAeropuerto(ActionEvent event) {
         try {
@@ -121,7 +135,11 @@ public class aeropuertosControler implements Initializable{
         }
     }
 
-
+    /**
+     * Método para editar la información de un aeropuerto seleccionado. Si no hay aeropuerto
+     * seleccionado, se muestra una alerta.
+     * @param event Evento de acción asociado al botón de editar aeropuerto.
+     */
     @FXML
     void editarAeropuerto(ActionEvent event) {
         Object aeropuerto = tablaVista.getSelectionModel().getSelectedItem();
@@ -160,7 +178,11 @@ public class aeropuertosControler implements Initializable{
             }
         }
     }
-
+    /**
+     * Método para borrar un aeropuerto seleccionado. Confirma la acción con el usuario,
+     * y si el usuario confirma, procede a eliminar el aeropuerto y sus aviones asociados.
+     * @param event Evento de acción asociado al botón de borrar aeropuerto.
+     */
     @FXML
     void borrarAeropuerto(ActionEvent event) {
         Object aeropuerto = tablaVista.getSelectionModel().getSelectedItem();
@@ -233,6 +255,12 @@ public class aeropuertosControler implements Initializable{
         }
     }
 
+    /**
+     * Muestra información del aeropuerto seleccionado en la tabla.
+     * Si no hay un aeropuerto seleccionado, muestra un mensaje de error.
+     *
+     * @param event Evento de acción que dispara la visualización de la información del aeropuerto.
+     */
     @FXML
     void infoAeropuerto(ActionEvent event) {
         Object aeropuerto = tablaVista.getSelectionModel().getSelectedItem();
@@ -297,7 +325,12 @@ public class aeropuertosControler implements Initializable{
             alerta.showAndWait();
         }
     }
-
+    /**
+     * Abre una ventana modal para añadir un avión a la base de datos de aviones.
+     * En caso de error en la carga de la ventana o imagen, muestra un mensaje de error.
+     *
+     * @param event Evento de acción que dispara la apertura de la ventana para añadir avión.
+     */
     @FXML
     void aniadirAvion(ActionEvent event) {
         try {
@@ -324,7 +357,12 @@ public class aeropuertosControler implements Initializable{
             alerta(lst);
         }
     }
-
+    /**
+     * Abre una ventana modal para activar o desactivar el estado de un avión.
+     * En caso de error en la carga de la ventana o imagen, muestra un mensaje de error.
+     *
+     * @param event Evento de acción que dispara la apertura de la ventana para activar/desactivar avión.
+     */
     @FXML
     void activarDesactivarAvion(ActionEvent event) {
         try {
@@ -351,7 +389,12 @@ public class aeropuertosControler implements Initializable{
             alerta(lst);
         }
     }
-
+    /**
+     * Abre una ventana modal para eliminar un avión de la base de datos.
+     * En caso de error en la carga de la ventana o imagen, muestra un mensaje de error.
+     *
+     * @param event Evento de acción que dispara la apertura de la ventana para borrar avión.
+     */
     @FXML
     void borrarAvion(ActionEvent event) {
         try {
@@ -379,7 +422,11 @@ public class aeropuertosControler implements Initializable{
         }
     }
 
-
+    /**
+     * Carga la lista de aeropuertos públicos en la tabla de la interfaz.
+     * Configura las columnas de la tabla con la información de cada aeropuerto público.
+     * Muestra un mensaje de error si no se encuentran aeropuertos o en caso de excepciones.
+     */
     public void cargarPublicos() {
         try {
             tablaVista.getSelectionModel().clearSelection();
@@ -435,7 +482,10 @@ public class aeropuertosControler implements Initializable{
         }
     }
 
-
+    /**
+     * Carga la lista de aeropuertos privados en la tabla de la interfaz.
+     * Configura las columnas de la tabla con la información de cada aeropuerto privado.
+     */
     public void cargarPrivados() {
 
         tablaVista.getSelectionModel().clearSelection();
@@ -468,13 +518,21 @@ public class aeropuertosControler implements Initializable{
         lstEntera.setAll(aeropuertos);
         tablaVista.setItems(aeropuertos);
     }
-
+    /**
+     * Habilita o deshabilita las opciones de edición, eliminación e información del menú de aeropuertos.
+     *
+     * @param deshabilitado booleano que indica si las opciones deben estar habilitadas o deshabilitadas.
+     */
     public void deshabilitarMenus(boolean deshabilitado) {
         editarAeropuerto.setDisable(deshabilitado);
         borrarAeropuerto.setDisable(deshabilitado);
         infoAeropuerto.setDisable(deshabilitado);
     }
 
+    /**
+     * Filtra la lista de aeropuertos en función del nombre ingresado en el campo de texto.
+     * Aplica el filtro sobre la lista de aeropuertos completa y muestra los resultados en la tabla.
+     */
     public void filtrar() {
         String valor = txtNombre.getText();
         valor = valor.toLowerCase();
@@ -505,6 +563,11 @@ public class aeropuertosControler implements Initializable{
         }
     }
 
+    /**
+     * Muestra una alerta de error con los mensajes proporcionados.
+     *
+     * @param textos Lista de mensajes a mostrar en la alerta de error.
+     */
     public void alerta(ArrayList<String> textos) {
         String contenido = String.join("\n", textos);
         Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -514,7 +577,11 @@ public class aeropuertosControler implements Initializable{
         alerta.showAndWait();
     }
 
-
+    /**
+     * Muestra una alerta de confirmación con el mensaje proporcionado.
+     *
+     * @param texto Mensaje a mostrar en la alerta de confirmación.
+     */
     public void confirmacion(String texto) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setHeaderText(null);
