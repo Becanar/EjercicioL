@@ -1,0 +1,6 @@
+module:com.example.ejerciciol
+com.example.ejerciciol.app
+com.example.ejerciciol.controladores
+com.example.ejerciciol.dao
+com.example.ejerciciol.db
+com.example.ejerciciol.model
